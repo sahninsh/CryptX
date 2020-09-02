@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+    <div class="loginLand landing">
+        <!-- <form></form> -->
+        <div class="form">
+            <div class="formHead">
+                <div class="f f1" > <a href="/register"> Register </a></div>
+                <div class="f f2"  style="background-color: #f1f1f1;"><a href="/login"> Login </a></div>
+            </div>
+            <div class="formBody">
+                <input type="text" class="input1">
+                <input type="text">
+                <button class='butt'>Login</button>
+                <!-- <p>Left to do</p> -->
+                <a class='anchor' href="/register">Already have an account?</a>
+            </div>
+        </div>
+    </div>
+    <script>
+        let obj;
+        let button = document.querySelector('.butt')
+        button.addEventListener('click', function(e){
+            console.log('clicked')
+            let input = document.querySelectorAll('input');
+            let values = [...input].map(item => item.value)
+            if(!values.includes('')){
+                fetch('/login', {
+                    method : 'POST',
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body : JSON.stringify({email : values[0], password : values[1]})
+                })
+                .then(function(resp){
+                    // CONSOLE.LOG(resp)
+                    console.log(resp)
+                })
+            }
+        })
+    </script>
+</body>
+</html>

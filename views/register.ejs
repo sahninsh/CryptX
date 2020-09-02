@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+    <div class="loginLand landing">
+        <!-- <form></form> -->
+        <div class="form">
+            <div class="formHead">
+                <div class="f f1" style="background-color: #f1f1f1;" > <a href="/register"> Register </a></div>
+                <div class="f f2" style="background-color: #fff;"><a href="/login"> Login </a></div>
+            </div>
+            <div class="formBody">
+                <input type="text" class="input1" placeholder="username">
+                <input type="email" placeholder="email">
+                <input type="password" placeholder="password">
+                <button class='butt'>Register</button>
+                <!-- <p>Left to do</p> -->
+            </div>
+        </div>
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/validator/13.1.1/validator.js"></script>
+    <script>
+        
+        function createElem(elem, text){
+            let element  = document.createElement(elem);
+            element.innerHTML = text
+            document.body.append(element)
+        }
+        console.log(validator)
+        let button = document.querySelector('.butt')
+        button.addEventListener('click', function(e){
+          
+            let input = document.querySelectorAll('input');
+            let values = [...input].map(item => item.value)
+
+            let obj = {
+                username : Boolean(input[0].value != ''),
+                email: validator.isEmail(input[1].value),
+                password: validator.isLength(input[2].value, {min : 8, max : undefined})
+            }    
+            let tf = (Object.values(obj).every(item => item === true))
+            if(tf){
+     
+                fetch('/register', {
+                    method : 'POST',
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body : JSON.stringify({username : values[0], email : values[1], password : values[2] })
+                })
+                .then(function(resp){
+                    // CONSOLE.LOG(resp)
+                    console.log(resp)
+                    return resp.text()
+                })
+                .then(resp => console.log(resp))
+            }
+            else {
+                if(!obj.username){
+                    createElem('div', 'Enter a Username')
+                }
+                if(!obj.email){
+                    createElem('div', 'Enter a valid Email')
+                }
+                if(!obj.password){
+                    createElem('div', 'Enter a password greater than 9 digits')
+                }
+
+            }
+        })
+    </script>
+</body>
+</html>
