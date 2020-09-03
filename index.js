@@ -16,21 +16,21 @@ app.use(express.json())
 mongoose.connect('mongodb+srv://sahninsh:8baNEERqqjA8Oizd@cluster0.nnubt.mongodb.net/this', {useNewUrlParser: true,useUnifiedTopology:true})
     .then(() => app.listen(80))
     .catch(() => console.log('errr'))
-// const userSchema =  new mongoose.Schema({
-//     username : {
-//         type : String,
-//         required: true,
-//     },
-//     email : {
-//         type : String,
-//         required: true,
-//     },
-//     password : {
-//         type : String,
-//         required: true,
-//     }
-// }, {timestamps : true})
-// let model = mongoose.model('User', userSchema)
+const userSchema =  new mongoose.Schema({
+    username : {
+        type : String,
+        required: true,
+    },
+    email : {
+        type : String,
+        required: true,
+    },
+    password : {
+        type : String,
+        required: true,
+    }
+}, {timestamps : true})
+let model = mongoose.model('User', userSchema)
 
 app.route('/')
     .get(function(req,res,next){
@@ -47,9 +47,37 @@ app.route('/login')
     .post(function(req,res){
         console.log(req.body)
         res.send('hello')
+        model.find({email : req.body.email})
+            .then(item => {
+                let it = item.reverse()[0]
+                console.log(item.reverse()[0])
+                bcrypt.compare(req.body.password,it.password )
+                    .then(function(item){
+                        console.log(item)
+                    })
+                // item.reverse()
+            })
+            
     })
 
+function hashingPassword(password,cb){
+    bcrypt.genSalt(8)
+        .then(function(salt){
+            bcrypt.hash(password, salt)
+                .then(function(item){
+                    cb(null,item)                    
+                })
+                .catch(function(err){
+                    console.log(err)
+                    cb(err,null)
+                })
+        })
+        .catch(function(err){
+            // console.log(err)
+            cb(err,null)
+        })
 
+}
 app.route('/register')
     .get(function(req,res,next){ 
         res.render('register.ejs')
@@ -59,14 +87,27 @@ app.route('/register')
         if(validator.isEmail(req.body.email) &&
         validator.isLength(req.body.password, {min : 8,max : undefined}))
         {   
+            hashingPassword(req.body.password, function(err,hashedPassword){
+                if(!(Boolean(err))){        
+                    new model({
+                        username : req.body.username,
+                        email : req.body.email,
+                        password: hashedPassword
+                    })
+                    .save()
+                    .then(function(item){
+                        res.redirect('/login')
 
-            new model({
-                username : req.body.username,
-                email : req.body.email,
-                
+                    })
+                    .catch(function(err){
+                        console.log(err)
+                        next()
+                    })
+
+                }
             })
         }
-        res.send('hello')
+     
     })
 
 // app.listen(80)
