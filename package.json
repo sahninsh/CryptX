@@ -10,6 +10,7 @@
   "license": "UNLICENSED",
   "dependencies": {
     "bcryptjs": "^2.4.3",
+    "cookie-parser": "^1.4.5",
     "dotenv": "^8.2.0",
     "ejs": "^3.1.5",
     "express": "^4.17.1",
@@ -17,5 +18,8 @@
     "mongoose": "^5.10.2",
     "morgan": "^1.10.0",
     "validator": "^13.1.1"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.4"
   }
 }

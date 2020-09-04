@@ -41,7 +41,12 @@
                 .then(function(resp){
                     // CONSOLE.LOG(resp)
                     console.log(resp)
+                    if(resp.redirected){
+                        window.location.href = resp.url;
+                    }
+                    // return resp.text()
                 })
+                
             }
         })
     </script>
