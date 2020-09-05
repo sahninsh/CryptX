@@ -118,9 +118,30 @@ function ensureLoggedIn(req,res,next){
     })
     // res.send('hello')
 }
-app.get('/levels/:level', function(req,res,next){
-    res.send(req.params.level)
-})
+function lastLetter(str){
+    return str[str.length-1]
+}
+// app.get('/levels/:level',ensureLoggedIn, function(req,res,next){
+//     // res.send(req.params.level)
+//     model.findById(req.id)
+//         .then(function(item){
+        
+//             let object = JSON.parse(JSON.stringify(item.levels));
+//             object.level1 = true;
+//             object.level2 = true;
+//             if(Object.keys(object).includes(req.params.level)){
+//                 let number = parseInt(lastLetter(req.params.level))
+
+//                 let previousLevelCleared = (object['level' + String(number-1)] === true)
+//                 if(previousLevelCleared){
+//                     res.render(__dirname + '/views/level' + String(number)  )
+//                 }
+//                 else {
+//                     res.redirect('/levels/' + String(number-1))
+//                 }
+//             }
+//         })
+// })
 app.route('/login')
     .get(function(req,res,next){
         res.render('login.ejs')
@@ -216,44 +237,86 @@ app.get('/logout', function(req,res,next){
 app.get('/logic', ensureLoggedIn, function(req,res,next){
     model.findById(req.id)
         .then(function(item){
+            // res.send(item)
+
+            let obj = JSON.parse(JSON.stringify(item.levels))
+            
+            let keys = Object.keys(obj);
+            
+            let level;
+            for(let i = 0; i< keys.length; i+=1){
+                if(obj[keys[i]] == false){
+                    level = keys[i]
+                    break;
+                }
+            }
+            console.log(level)
+
+            
+            res.redirect('/levels/' + level)
+        })  
+        .catch(function(err){
+            res.redirect('/login')
+        })    
+})
+
+
+app.get('/levels/:level',ensureLoggedIn, function(req,res,next){
+    model.findById(req.id)
+        .then(function(item){
             let object = JSON.parse(JSON.stringify(item.levels));
-            object.level1 = true
-            
-            let array = []
-            for(let key in object){
-                // console.log(key)
-                array.push(object[key])
+            if(object[req.params.level] == true){
+                res.redirect('/logic')
             }
-            let everyItem = array.every(function(item){
-                if(item === false){
-                    return true;
-                }
-            })
-            console.log(everyItem)
-            let x = false;
-            let y;
-            for(let i =0; i < Object.values(object).length; i+=1){
-                console.log(object[(Object.values(object))[i]])
-                if(object[Object.values(object)[1]] === true){
-                    if(i < 9){
-                        y = (Object.values(object)[i+1])
-                        x = true;
-                        console.log(21)
-                        break;
+            else{
+                next();
+            }
+        })
+},function(req,res,next){
+    model.findById(req.id)
+        .then(function(item){
+            let userInfo = JSON.parse(JSON.stringify(item.levels));
+            if(Object.keys(userInfo).includes(req.params.level) ){
+                // for(let i =0; i < Object.keys(userInfo).length; i+=1){
+                    if(parseInt(lastLetter(req.params.level)) == 1){
+                        res.render('level1.ejs')
                     }
-                }
-            }
-            
-            if(Boolean(x)){
-                let route = '/levels/' + y;
-                console.log(route)
-                res.redirect(route)
+                    else{
+                        let lastLevelPassed = 'level' + (parseInt(lastLetter(req.params.level)) - 1).toString();
+                        console.log(userInfo[lastLevelPassed] === true)
+                        if(userInfo[lastLevelPassed] === true){
+                           res.render(req.params.level)
+                        }
+                        else {
+                           res.redirect('/logic')
+                        }
+                    }
             }
             else {
-                res.redirect('/levels/level1')
+                res.redirect('/404')
             }
-        })   
-
+        })
+    // res.render(req.params.level)
 })
+
+// , function(req,res,next){
+//     // if(req.params.level
+//     model.findById(req.id)
+//         .then(function(item){
+//             if(Object.keys(item.levels).includes(req.params.level)){
+//                 let previousLevel = 'level'+ (parseInt(lastLetter(req.params.level)) - 1).toString();
+//                 console.log(previousLevel)
+//                 if(item.levels[previousLevel] == true){
+//                     next()
+//                 }
+//                 else {
+//                     res.redirect('/logic')
+//                 }
+//             }
+//         })
+//         .catch(function(){
+//             res.send('tum mein hee koi galti hein')
+//         })
+// }
 // app.listen(80)
 
