@@ -158,35 +158,19 @@ function ensureLoggedIn(req,res,next){
     })
     // res.send('hello')
 }
-// function lastLetter(str){
-//     // return str[str.length-1]
-//     let i = 0;
-//     let number = '';
-//     while( i < str.length){
-//         if(Boolean(Number(str[i]))){
-            
-//             number = number + str[i]
-//         }
-//         i= i+1
-//     }
-//     return number
-// }
-
-
 function lastLetter(str){
-    let i =0;
-    let number = ''
-    while( i < str.length){
-        
-        if(parseInt(str[i]) != NaN){
-            number = number + str[i]
+    let i = 0;
+    let num= ''
+    while (i < str.length){
+        if(!Number.isNaN(Number(str[i]))){
+            num = num + str[i]
         }
         i+=1
     }
-    return number;
+    return (num)
 }
 
-// console.log(lastLetter('level10'))
+lastLetter('level10')
 
 app.route('/login')
     .get(isLoggedIn,function(req,res,next){
@@ -398,9 +382,10 @@ app.post('/levels/:level', ensureLoggedIn, function(req,res,next){
 })
 
 app.get('/leaderboard', function(req,res,next){
-    models.find()
+    model.find()
         .then(function(item){
-            console.log(item)
+            // console.log(item)
+            res.render('leaderboard.ejs', {item})
         })
 })
 app.get('/fourofour', function(req,res,next){

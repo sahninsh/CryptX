@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        *{
+            box-sizing: border-box;
+            font-family: sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+        .land {
+            min-height: 100vh;
+            /* widows: ; */
+            color: #fff;
+            background-color: #1e1e30;
+            padding: 8vh 2vw;
+        }
+        .table{
+            width: 80%;
+            margin:0vh auto 0 auto   ;
+            /* padding: 8vh 0 0 0; */
+            /* background-color: #161625; */
+        }
+        .row{
+            width: 100%;
+            padding: 1% 1%;
+            border-bottom: 1px solid #fff;
+            display: flex;
+        }
+        .username {
+            width: 50%;
+            overflow: hidden;
+
+        }
+        .points{
+            width: 20%;
+        }
+        .institution{
+            width: 30%;
+        }
+        .dark{
+            font-weight: 700;
+        }
+    </style>
+</head>
+<body>
+    <div class="land">
+        <div class="table">
+            <div class="row">
+                <div class="dark username">Name</div>
+                <div class="points dark" >Points</div>
+                <div class="institution dark">Institution</div>
+            </div>
+            <% let i = 0; %>
+
+        <% if(Boolean(item)){ %>
+            <% while(i < item.length) {%>
+                <!-- <div>  </div>  -->
+                <div class="row">
+                    <div class="username"> <%= item[i].username %> </div>
+                    <div class="points"> <%= '20' %> </div>
+                    <div class="institution"> Montfort School</div>
+                </div>
+            <% i+=1 %> 
+            <% } %>  
+        <% } %>   
+        </div>
+        
+    </div>
+    
+</body>
+</html>
