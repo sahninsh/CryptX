@@ -18,7 +18,7 @@ body{
 .landing {
     height: 100vh;
     color:#f5f5f7;
-    background-color: #1e1e30;
+    background-color: #1a283d;
     /* padding: 15px 35px */
     padding: 3% ;
     display: flex;
@@ -70,10 +70,11 @@ body{
 
 .form {
     /* height: 40vh; */
-    min-width: 40vh;
+    min-width: 60vh;
     display: flex;
     flex-direction: column;
-    background-color: #f1f1f1;
+    background-color: #161625;
+    color: #fff;
     color: #000;
 }
 .formHead{
@@ -99,6 +100,7 @@ body{
     flex-direction: row;
     justify-content: center;
     align-items: center;
+    background-color: #1a283d !important;
 }
 .formBody{
     padding: 0 5%;
@@ -111,6 +113,7 @@ body{
 }
 input,.butt{
     border: none;
+    background-color: transparent;
     outline: none;
     width: 100%;
     /* padding: 0.2vh 0.2vw; */
@@ -120,6 +123,7 @@ input,.butt{
     border: 1px solid #000;
     border-radius: 4px;
     font-family: 'Montserrat';
+    
 }
 
 .input1{margin-top: 0;}
@@ -128,16 +132,39 @@ input,.butt{
     margin-top: 5%;
     /* text-align: left; */
     width: 96%;
-    color: #000;
+    color: #fff;
     text-decoration: none;
 }
 .f a {
     height: 100%;
     width: 100%;
     display: inline-block;
-    color: #000;
+    /* color: #000; */
+    color: #fff;
     text-decoration: none;
 }
 input,.butt,.f,a{
     font-family: 'sf';
+    color: #fff;
+
+    /* border: ; */
+}
+.f{
+    background-color: #161625;
+    
+    font-size: 18px;
+}
+input{
+    border: none;
+    border-bottom: 1px solid #fff;
+    border-radius: 0;
+    
+
+}
+.butt{
+    width: 40%;
+    border-radius: 0;
+    border: 1px solid #fff;
+    margin-top: 3vh;
+    width: 100%;   
 }

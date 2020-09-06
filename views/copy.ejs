@@ -74,24 +74,13 @@
         })
         let button = document.querySelector('button');
         button.addEventListener('click', function(e){
-            // console.log('clicked')
             if(input.value != ''){
-                // console.log('yo')
-                fetch('/levels/level4', {
+                fetch('/levels/level9', {
                     method : 'POST',
                     headers : {
                         'Content-Type': 'application/json'
                     },
-                    body : JSON.stringify({answer : input.value}),
-                    redirect : 'follow'
-                })
-                .then(function(resp){
-                    console.log('yo2.0')
-                    console.log(resp)
-                    if((resp.redirected)){
-                        console.log('yes')
-                        window.location.href = resp.url
-                    }
+                    body : JSON.stringify({answer : input.value})
                 })
             }
         })

@@ -5,76 +5,97 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <link rel="stylesheet" href="/style.css">
+    <style>
+        .land {
+            background-color: #1a283d;
+            height: 100vh;
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            align-items: center;
+        }
+        *{
+            box-sizing: border-box;
+        }
+        .form {
+            width: 40vh;
+            padding: 4vh 3vh;
+            /* border: 1px solid #fff; */
+            box-shadow: 0px 0px 45px 0px #161625;
+        }
+        button {
+            padding: 1vh ;
+            margin-top: 8vh;
+            margin-bottom: 2vh;
+            background-color: transparent;
+            border: none;
+            border: 1px solid #fff;
+            padding: 2vh 0;
+            width: 100%;
+            color: #fff;
+            /* opacity: 0.3; */
+            
+            margin: 8vh auto;
+            margin-bottom: 4vh;
+        }
+        input{
+            padding: 2vh 0.6vw;
+        }
+        p{
+            font-size: 3rem;
+            color: #fff;
+            margin: 0;
+
+        }
+        .in{
+            margin-top: 4vh;
+        }
+    </style>
 </head>
 <body>
-    <div class="loginLand landing">
-        <!-- <form></form> -->
-        <div class="form">
-            <div class="formHead">
-                <div class="f f1" style="background-color: #f1f1f1;" > <a href="/register"> Register </a></div>
-                <div class="f f2" style="background-color: #fff;"><a href="/login"> Login </a></div>
-            </div>
-            <div class="formBody">
-                <input type="text" class="input1" placeholder="username">
+    <body>
+        <div class="land">
+            <div class="form">
+                <p>Register</p>
+                <input class="in" type="text" placeholder="username">
                 <input type="email" placeholder="email">
                 <input type="password" placeholder="password">
-                <button class='butt'>Register</button>
-                <!-- <p>Left to do</p> -->
-            </div>
+                <button>Submit</button>
+            </div>    
         </div>
-    </div>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/validator/13.1.1/validator.js"></script>
+    </body>
     <script>
         
-        function createElem(elem, text){
-            let element  = document.createElement(elem);
-            element.innerHTML = text
-            document.body.append(element)
-        }
-        console.log(validator)
-        let button = document.querySelector('.butt')
-        button.addEventListener('click', function(e){
-          
-            let input = document.querySelectorAll('input');
-            let values = [...input].map(item => item.value)
+        let input = document.querySelectorAll('input');
 
-            let obj = {
-                username : Boolean(input[0].value != ''),
-                email: validator.isEmail(input[1].value),
-                password: validator.isLength(input[2].value, {min : 8, max : undefined})
-            }    
-            let tf = (Object.values(obj).every(item => item === true))
-            if(tf){
-     
+        
+        // let password = input[2].value;
+        let button = document.querySelector('button')
+        button.addEventListener('click', buttonClick)
+        function buttonClick(e){
+            let username  = input[0].value;
+            console.log('request')
+            let email  = input[1].value;
+            let password = input[2].value
+            if( username != '' && email != '' && password != ''){
+                console.log('hello')
                 fetch('/register', {
                     method : 'POST',
                     headers: {
-                        "Content-Type": "application/json"
+                            "Content-Type": "application/json"
                     },
-                    body : JSON.stringify({username : values[0], email : values[1], password : values[2] })
+                    body : JSON.stringify({email, password, username}),
+                    redirect : 'follow'
                 })
                 .then(function(resp){
-                    // CONSOLE.LOG(resp)
-                    // console.log(resp)
+                    console.log(resp)
                     if(resp.redirected){
-                        window.location.href = resp.url
+                        window.location.href =  resp.url;
                     }
-                    // return resp.text()
                 })
             }
-            else {
-                if(!obj.username){
-                    createElem('div', 'Enter a Username')
-                }
-                if(!obj.email){
-                    createElem('div', 'Enter a valid Email')
-                }
-                if(!obj.password){
-                    createElem('div', 'Enter a password greater than 9 digits')
-                }
-
-            }
-        })
+        }
+        
     </script>
 </body>
 </html>

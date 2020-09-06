@@ -1,12 +1,12 @@
-function name(){
-    console.log(2);
-    return 12;
+
+function x(name){    
+    let obj = {name, age : new Array()}
+    return obj
 }
 
 
-let x = name()
-    // .toString();
+
+// console.log(obj['name'])
 
 
-
-    console.log(typeof(x))
+console.log(x({name : 'ANsh'}))

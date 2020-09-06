@@ -1,7 +1,4 @@
 const express = require('express');
-
-// require('dotenv').config();
-// const { response } = require('express');
 const morgan = require('morgan');
 const {join} = require('path')
 const validator = require('validator');
@@ -11,7 +8,7 @@ const jwt = require('jsonwebtoken');
 const cookieParser = require('cookie-parser');
 const app = express();
 app.set('view engine','ejs');
-app.use(morgan('combined'))
+app.use(morgan('dev'))
 app.use(express.static(join(__dirname,'static')))
 app.use(express.json())
 app.use(cookieParser())
@@ -78,8 +75,51 @@ const userSchema =  new mongoose.Schema({
             type : Boolean,
             default : false
         }
+    },
+    answers : {
+        level1 : {
+            type : String,
+            default : '$2y$08$DE2DuVYB4gPib6Pc6x1N.OTEJK6CKn8Hm.9QjrQyoT8/yYxB9ylFC'
+        },
+        level2 : {
+            type : String,
+            default : '$2y$08$DE2DuVYB4gPib6Pc6x1N.OTEJK6CKn8Hm.9QjrQyoT8/yYxB9ylFC'
+        },
+        level3 : {
+            type : String,
+            default : '$2y$08$DE2DuVYB4gPib6Pc6x1N.OTEJK6CKn8Hm.9QjrQyoT8/yYxB9ylFC'
+        },
+        level4 : {
+            type : String,
+            default : '$2y$08$DE2DuVYB4gPib6Pc6x1N.OTEJK6CKn8Hm.9QjrQyoT8/yYxB9ylFC'
+        },
+        level5 : {
+            type : String,
+            default : '$2y$08$DE2DuVYB4gPib6Pc6x1N.OTEJK6CKn8Hm.9QjrQyoT8/yYxB9ylFC'
+        },
+        level6 : {
+            type : String,
+            default : '$2y$08$DE2DuVYB4gPib6Pc6x1N.OTEJK6CKn8Hm.9QjrQyoT8/yYxB9ylFC'
+        },
+        level7 : {
+            type : String,
+            default : '$2y$08$DE2DuVYB4gPib6Pc6x1N.OTEJK6CKn8Hm.9QjrQyoT8/yYxB9ylFC'
+        },
+        level8 : {
+            type : String,
+            default : '$2y$08$DE2DuVYB4gPib6Pc6x1N.OTEJK6CKn8Hm.9QjrQyoT8/yYxB9ylFC'
+        },
+        level9 : {
+            type : String,
+            default : '$2y$08$DE2DuVYB4gPib6Pc6x1N.OTEJK6CKn8Hm.9QjrQyoT8/yYxB9ylFC'
+        },
+        level10 : {
+            type : String,
+            default : '$2y$08$DE2DuVYB4gPib6Pc6x1N.OTEJK6CKn8Hm.9QjrQyoT8/yYxB9ylFC'
+        }
     }
 }, {timestamps : true})
+let answerModel = mongoose.model('answer', {answer1 : String})
 let model = mongoose.model('User', userSchema)
 
 app.route('/')
@@ -112,38 +152,44 @@ function ensureLoggedIn(req,res,next){
             next();
         }
         else {
-            // res.send('tum hee koi kharabi hein')
+            console.log('tum hee koi kharabi hein')
             res.redirect('/login')
         }
     })
     // res.send('hello')
 }
-function lastLetter(str){
-    return str[str.length-1]
-}
-// app.get('/levels/:level',ensureLoggedIn, function(req,res,next){
-//     // res.send(req.params.level)
-//     model.findById(req.id)
-//         .then(function(item){
-        
-//             let object = JSON.parse(JSON.stringify(item.levels));
-//             object.level1 = true;
-//             object.level2 = true;
-//             if(Object.keys(object).includes(req.params.level)){
-//                 let number = parseInt(lastLetter(req.params.level))
+// function lastLetter(str){
+//     // return str[str.length-1]
+//     let i = 0;
+//     let number = '';
+//     while( i < str.length){
+//         if(Boolean(Number(str[i]))){
+            
+//             number = number + str[i]
+//         }
+//         i= i+1
+//     }
+//     return number
+// }
 
-//                 let previousLevelCleared = (object['level' + String(number-1)] === true)
-//                 if(previousLevelCleared){
-//                     res.render(__dirname + '/views/level' + String(number)  )
-//                 }
-//                 else {
-//                     res.redirect('/levels/' + String(number-1))
-//                 }
-//             }
-//         })
-// })
+
+function lastLetter(str){
+    let i =0;
+    let number = ''
+    while( i < str.length){
+        
+        if(parseInt(str[i]) != NaN){
+            number = number + str[i]
+        }
+        i+=1
+    }
+    return number;
+}
+
+// console.log(lastLetter('level10'))
+
 app.route('/login')
-    .get(function(req,res,next){
+    .get(isLoggedIn,function(req,res,next){
         res.render('login.ejs')
     })
     .post(function(req,res){
@@ -171,6 +217,7 @@ app.route('/login')
                     })
                     .catch(function(err){
                         console.log(err)
+                        res.send('error')
                     })
             })  
     })
@@ -197,7 +244,7 @@ function hashingPassword(password,cb){
 
 }
 app.route('/register')
-    .get(function(req,res,next){ 
+    .get(isLoggedIn,function(req,res,next){ 
         res.render('register.ejs')
     })
     .post(function(req,res,next){
@@ -235,6 +282,7 @@ app.get('/logout', function(req,res,next){
 })
 
 app.get('/logic', ensureLoggedIn, function(req,res,next){
+    console.log('yes')
     model.findById(req.id)
         .then(function(item){
             // res.send(item)
@@ -245,22 +293,45 @@ app.get('/logic', ensureLoggedIn, function(req,res,next){
             
             let level;
             for(let i = 0; i< keys.length; i+=1){
+                
+                console.log(obj[keys[i]] + 'yoyoyo')
                 if(obj[keys[i]] == false){
                     level = keys[i]
                     break;
                 }
             }
-            console.log(level)
+            console.log(level + 'nskalns')
 
-            
-            res.redirect('/levels/' + level)
+            if(level){
+                res.redirect('/levels/' + level)
+            }
+            else {
+                res.redirect('/leaderboard')
+            }
         })  
         .catch(function(err){
             res.redirect('/login')
         })    
 })
+function lastAlgo(str){
+    // let i = 0;
+    return str[str.length -1]
+}
+function isLoggedIn(req,res,next){
+    jwt.verify(req.cookies.token , 'secretkey', function(err, token){
+        if(!err){
+            res.redirect('/profile')
+        }
+        else {
+            next();
+        }
+
+    })
+}
 
 
+// isLoggedIn({cookies : {token : 'eyJhbGciOiJIUzI1NiJ9.eyJpZCI6IjVmNTQyMDQwMGU4OTE2NTk5NGQ0Mzk0YiJ9.8ydrl3Dt5ScfFk_CEhjFhlSauhsVr9TH8MK4UsP04sI'}})
+// isLoggedIn({name : 'ANsh', cookies : {token : '123'}})
 app.get('/levels/:level',ensureLoggedIn, function(req,res,next){
     model.findById(req.id)
         .then(function(item){
@@ -269,6 +340,7 @@ app.get('/levels/:level',ensureLoggedIn, function(req,res,next){
                 res.redirect('/logic')
             }
             else{
+                console.log('next')
                 next();
             }
         })
@@ -276,16 +348,21 @@ app.get('/levels/:level',ensureLoggedIn, function(req,res,next){
     model.findById(req.id)
         .then(function(item){
             let userInfo = JSON.parse(JSON.stringify(item.levels));
+            // console.log(userInfo)
+            console.log('before if stateemt')
             if(Object.keys(userInfo).includes(req.params.level) ){
-                // for(let i =0; i < Object.keys(userInfo).length; i+=1){
-                    if(parseInt(lastLetter(req.params.level)) == 1){
+                console.log(parseInt(lastLetter(req.params.level)), 12345678 )
+                    if(parseInt(lastAlgo(req.params.level)) == 1){
                         res.render('level1.ejs')
                     }
                     else{
                         let lastLevelPassed = 'level' + (parseInt(lastLetter(req.params.level)) - 1).toString();
-                        console.log(userInfo[lastLevelPassed] === true)
+                        // console.log(lastLevelPassed)
                         if(userInfo[lastLevelPassed] === true){
+                            console.log('debugging')
                            res.render(req.params.level)
+
+
                         }
                         else {
                            res.redirect('/logic')
@@ -293,30 +370,44 @@ app.get('/levels/:level',ensureLoggedIn, function(req,res,next){
                     }
             }
             else {
-                res.redirect('/404')
+                res.redirect('/fourofour')
             }
         })
-    // res.render(req.params.level)
+    
+})
+app.post('/levels/:level', ensureLoggedIn, function(req,res,next){
+      model.findById(req.id)
+        .then((item) => {
+            console.log(12)
+            let object = JSON.parse(JSON.stringify(item.levels));
+            // console.log(object.answers)
+            bcrypt.compare(req.body.answer, item.answers[req.params.level])
+                .then(function(compare){
+                    if(compare){
+                        object[req.params.level] = true
+                        model.findByIdAndUpdate(req.id , {levels : object})
+                            .then(function(item){
+                                res.redirect('/logic')
+                            })
+                    }
+                })          
+                .catch(function(){
+                    console.log('error')
+                })  
+        }) 
 })
 
-// , function(req,res,next){
-//     // if(req.params.level
-//     model.findById(req.id)
-//         .then(function(item){
-//             if(Object.keys(item.levels).includes(req.params.level)){
-//                 let previousLevel = 'level'+ (parseInt(lastLetter(req.params.level)) - 1).toString();
-//                 console.log(previousLevel)
-//                 if(item.levels[previousLevel] == true){
-//                     next()
-//                 }
-//                 else {
-//                     res.redirect('/logic')
-//                 }
-//             }
-//         })
-//         .catch(function(){
-//             res.send('tum mein hee koi galti hein')
-//         })
-// }
-// app.listen(80)
+app.get('/leaderboard', function(req,res,next){
+    models.find()
+        .then(function(item){
+            console.log(item)
+        })
+})
+app.get('/fourofour', function(req,res,next){
+    res.send(  '<b>404</b>' )
+})
+
+app.use('/', function(req,res,next){
+    res.redirect('/fourofour')
+})
 

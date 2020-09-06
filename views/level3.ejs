@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body{
+            margin: 0;
+            padding: 0;
+            color: #ffffff;
+            font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+        }
+        *{
+            box-sizing: border-box;
+        }
+        .landing{
+            background-color: #1e1e30;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+        .question{
+            text-align: center;
+            font-size: 34px;
+            width: 45%;
+            word-wrap: break-word;
+        }
+
+        input,button{
+            margin: 0;
+            padding: 8px;
+            width: 45%;
+            background-color: transparent;
+            border: 0;
+            font-size: 22px;
+            outline: none;
+            color: #fff;
+            border-bottom: 1px solid #fff;
+            transition: 300ms;
+            margin-top: 2vh;
+
+        }
+        .button {
+            width: 45%;
+            display: flex ;
+            flex-direction: column;
+            /* justify-content: center; */
+            align-items: center;
+        }
+        button {
+            border: 1px solid #fff;
+            margin-top: 4vh;
+
+        }
+
+        
+    </style>
+</head>
+<body>
+    <div class="landing">
+        <div class="question">Cryptic HUnt hein bhenchod aur kya chaiye</div>
+        <input type="text">
+        <div class="button"><button>Submit</button></div>
+    </div>
+</body>
+<script>
+    window.addEventListener('load', function(e){
+        let input = document.querySelector('input')
+        input.addEventListener('focus', function(e){
+            this.style.cssText = 'border-bottom: 1px solid #f1f1f1'
+        })
+        let button = document.querySelector('button');
+        button.addEventListener('click', function(e){
+            // console.log('clicked')
+            if(input.value != ''){
+                // console.log('yo')
+                fetch('/levels/level3', {
+                    method : 'POST',
+                    headers : {
+                        'Content-Type': 'application/json'
+                    },
+                    body : JSON.stringify({answer : input.value}),
+                    redirect : 'follow'
+                })
+                .then(function(resp){
+                    console.log('yo2.0')
+                    console.log(resp)
+                    if((resp.redirected)){
+                        console.log('yes')
+                        window.location.href = resp.url
+                    }
+                })
+            }
+        })
+    })
+</script>
+
+</html>
