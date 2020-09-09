@@ -12,7 +12,7 @@ app.use(morgan('dev'))
 app.use(express.static(join(__dirname,'static')))
 app.use(express.json())
 app.use(cookieParser())
-let PORT = process.env.PORT || 3000
+let PORT = process.env.PORT || 80
 mongoose.connect('mongodb+srv://sahninsh:8baNEERqqjA8Oizd@cluster0.nnubt.mongodb.net/this', {useNewUrlParser: true,useUnifiedTopology:true})
     .then(() => {
         console.log('DB connected')

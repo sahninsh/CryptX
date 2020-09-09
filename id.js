@@ -1,12 +1,10 @@
+function yo(){
+    function nope(){
+        console.log(this)
+    }
 
-function x(name){    
-    let obj = {name, age : new Array()}
-    return obj
+    nope()
 }
 
 
-
-// console.log(obj['name'])
-
-
-console.log(x({name : 'ANsh'}))
+window.yo()
