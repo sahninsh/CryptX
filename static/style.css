@@ -1,170 +1,182 @@
-
-@import url('https://fonts.googleapis.com/css2?family=Lato&family=Montserrat:wght@300&family=Roboto&family=Ubuntu&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Lato&family=Montserrat:wght@300&family=Roboto&family=Ubuntu&display=swap");
 /* @font-face */
 @font-face {
-    font-family: sf;
-    src: url('/sfpro.ttf');
-  }
-body{
-    margin: 0;
-    padding: 0;
-    /* font-family: Arial, "Helvetica Neue", Helvetica, sans-serif; */
-    font-family: 'sf';
-    
+  font-family: sf;
+  src: url("/sfpro.ttf");
 }
-*{
-    box-sizing: border-box;
+body {
+  margin: 0;
+  padding: 0;
+  /* font-family: Arial, "Helvetica Neue", Helvetica, sans-serif; */
+  font-family: "sf";
+}
+* {
+  box-sizing: border-box;
 }
 .landing {
-    height: 100vh;
-    color:#f5f5f7;
-    background-color: #1a283d;
-    /* padding: 15px 35px */
-    padding: 3% ;
-    display: flex;
-    flex-direction: row;
+  height: 100vh;
+  color: #f5f5f7;
+  background-color: #1a283d;
+  /* padding: 15px 35px */
+  padding: 3%;
+  display: flex;
+  flex-direction: row;
 }
 
 .Header {
-    font-size:4rem;
-    /* margin-top: 10vh; */
+  font-size: 4rem;
+  /* margin-top: 10vh; */
 }
 .lorem {
-    width: 80%;
-    margin-top: 2vh;
-    opacity: 0.7;
+  width: 80%;
+  margin-top: 2vh;
+  opacity: 0.7;
 }
 .buttons {
-    display: flex;
-    margin-top: 3vh;
+  display: flex;
+  margin-top: 3vh;
 }
 .button {
-    background-color: transparent;
-    padding: 1vh 1vw;
-    border: 1px solid #fff;
-    border-radius: 4px;
-    color: #fff;
-    outline: none;
-    font-size: 1.2rem;
-    font-family: 'Montserrat';
-
+  background-color: transparent;
+  padding: 1vh 1vw;
+  border: 1px solid #fff;
+  border-radius: 4px;
+  color: #fff;
+  outline: none;
+  font-size: 1.2rem;
+  font-family: "Montserrat";
+  cursor: pointer;
+  transition: all 1s;
 }
+
+.button:hover {
+  background-color: snow;
+  padding: 1vh 1vw;
+
+  border: 1px solid #fff;
+  color: #1a283d;
+  transition: all 1s;
+  font-weight: bold;
+}
+
 .button2 {
-    margin-left: 1vw;
+  margin-left: 1vw;
 }
 .text-container {
-    width: 50%;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-
+  width: 45%;
+  margin-left: 5%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
-.image-container{
-    height: 100%;
-    width: 50%;
-    background-image: url('/bg1.png');
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: contain;
+.image-container {
+  height: 100%;
+  width: 50%;
+  background-image: url("/bg1.png");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: contain;
 }
 
 .form {
-    /* height: 40vh; */
-    min-width: 60vh;
-    display: flex;
-    flex-direction: column;
-    background-color: #161625;
-    color: #fff;
-    color: #000;
+  /* height: 40vh; */
+  min-width: 60vh;
+  display: flex;
+  flex-direction: column;
+  background-color: #161625;
+  color: #fff;
+  color: #000;
 }
-.formHead{
-    display: flex;
-    flex-direction: row;
+.formHead {
+  display: flex;
+  flex-direction: row;
 }
-.f{
-    width: 50%;
-    text-align: center;
-    padding: 5% 0;
-    /* border: 1px solid red; */
-    /* font-size: 20px; */
-    /* border-bottom: 1px solid #000; */
-    background-color: #fff;
+.f {
+  width: 50%;
+  text-align: center;
+  padding: 5% 0;
+  /* border: 1px solid red; */
+  /* font-size: 20px; */
+  /* border-bottom: 1px solid #000; */
+  background-color: #fff;
 }
-.f2{
-    /* border-left: 1px solid #000; */
-    
-    background-color: #f1f1f1;
+.f2 {
+  /* border-left: 1px solid #000; */
+
+  background-color: #f1f1f1;
 }
-.loginLand{
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
-    background-color: #1a283d !important;
+.loginLand {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  background-color: #1a283d !important;
 }
-.formBody{
-    padding: 0 5%;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    flex-grow: 1;
-    padding: 4vh 5%;
+.formBody {
+  padding: 0 5%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  flex-grow: 1;
+  padding: 4vh 5%;
 }
-input,.butt{
-    border: none;
-    background-color: transparent;
-    outline: none;
-    width: 100%;
-    /* padding: 0.2vh 0.2vw; */
-    padding: 6px 8px;
-    margin-top: 5%;
-    font-size: 20px;
-    border: 1px solid #000;
-    border-radius: 4px;
-    font-family: 'Montserrat';
-    
+input,
+.butt {
+  border: none;
+  background-color: transparent;
+  outline: none;
+  width: 100%;
+  /* padding: 0.2vh 0.2vw; */
+  padding: 6px 8px;
+  margin-top: 5%;
+  font-size: 20px;
+  border: 1px solid #000;
+  border-radius: 4px;
+  font-family: "Montserrat";
 }
 
-.input1{margin-top: 0;}
+.input1 {
+  margin-top: 0;
+}
 .anchor {
-
-    margin-top: 5%;
-    /* text-align: left; */
-    width: 96%;
-    color: #fff;
-    text-decoration: none;
+  margin-top: 5%;
+  /* text-align: left; */
+  width: 96%;
+  color: #fff;
+  text-decoration: none;
 }
 .f a {
-    height: 100%;
-    width: 100%;
-    display: inline-block;
-    /* color: #000; */
-    color: #fff;
-    text-decoration: none;
+  height: 100%;
+  width: 100%;
+  display: inline-block;
+  /* color: #000; */
+  color: #fff;
+  text-decoration: none;
 }
-input,.butt,.f,a{
-    font-family: 'sf';
-    color: #fff;
+input,
+.butt,
+.f,
+a {
+  font-family: "sf";
+  color: #fff;
 
-    /* border: ; */
+  /* border: ; */
 }
-.f{
-    background-color: #161625;
-    
-    font-size: 18px;
-}
-input{
-    border: none;
-    border-bottom: 1px solid #fff;
-    border-radius: 0;
-    
+.f {
+  background-color: #161625;
 
+  font-size: 18px;
 }
-.butt{
-    width: 40%;
-    border-radius: 0;
-    border: 1px solid #fff;
-    margin-top: 3vh;
-    width: 100%;   
+input {
+  border: none;
+  border-bottom: 1px solid #fff;
+  border-radius: 0;
+}
+.butt {
+  width: 40%;
+  border-radius: 0;
+  border: 1px solid #fff;
+  margin-top: 3vh;
+  width: 100%;
 }
